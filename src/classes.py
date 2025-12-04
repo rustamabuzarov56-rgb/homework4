@@ -16,6 +16,10 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+    def __str__(self) -> str:
+        """Магический метод добавляет строковое отображение в виде: 'Название продукта, 80 руб. Остаток: 15 шт.' """
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+
     @classmethod
     def new_product(cls, product_data: dict) -> Product:
         """Класс-метод, создающий экземпляр класса Product"""
@@ -52,6 +56,14 @@ class Category:
         self.__products = products
         Category.category_count += 1
 
+    def __str__(self) -> str:
+        """Магический метод добавляет строковое отображение в виде:'Название категории, количество продуктов: 200 шт.' """
+        total_quantity = 0
+        for product in self.__products:
+            total_quantity += product.quantity
+        return f"{self.name}, количество продуктов: {sum(total_quantity)} шт."
+
+
     def add_product(self, product: Product) -> None:
         """Метод добавления товара в категорию"""
         self.__products.append(product)
@@ -62,7 +74,7 @@ class Category:
         """Геттер возвращающий список товаров"""
         result = ""
         for product in self.__products:
-            result += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
+            result += f"{str(product)}\n"
         return result
 
 
