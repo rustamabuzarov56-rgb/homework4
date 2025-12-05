@@ -71,4 +71,6 @@ def test_str_category(test_data_2):
 
 
 def test_add_class_product(test_data_1, test_data_other):
-    assert test_data_1, test_data_other == 2580000.0
+    expected_result = 180000.0 * 5 + 210000.0 * 8  # Должно быть равно 2580000.0
+    result = test_data_1 + test_data_other
+    assert result == expected_result
