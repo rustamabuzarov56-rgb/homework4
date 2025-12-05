@@ -1,4 +1,3 @@
-
 from src.classes import Category, Product
 
 
@@ -61,3 +60,15 @@ def test_additional_product(test_data_2):
     additional_product = Product("Google Pixel 7 Pro", "256GB, Черный", 90000.0, 3)
     test_data_2.add_product(additional_product)
     assert Category.product_count == 1
+
+
+def tests_str_product(test_data_1):
+    assert str(test_data_1) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_str_category(test_data_2):
+    assert str(test_data_2) == "Смартфоны, количество продуктов: 27 шт."
+
+
+def test_add_class_product(test_data_1, test_data_other):
+    assert test_data_1, test_data_other == 2580000.0
