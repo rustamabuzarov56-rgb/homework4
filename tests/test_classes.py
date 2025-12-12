@@ -1,6 +1,6 @@
 import pytest
 
-from src.classes import Category, Product, Smartphone, LawnGrass
+from src.classes import Category, Product
 
 
 def test_product(test_data_1):
@@ -16,6 +16,7 @@ def test_new_product(test_data_1):
     assert test_data_1.price == 180000.0
     assert test_data_1.quantity == 5
 
+
 def test_smartphone(test_data_smartphone):
     assert test_data_smartphone.name == "Xiaomi Redmi Note 11"
     assert test_data_smartphone.description == "1024GB, Синий"
@@ -25,6 +26,7 @@ def test_smartphone(test_data_smartphone):
     assert test_data_smartphone.model == "Note 11"
     assert test_data_smartphone.memory == 1024
     assert test_data_smartphone.color == "Синий"
+
 
 def test_lawn_grass(test_data_lawn_grass):
     assert test_data_lawn_grass.name == "Газонная трава"
@@ -96,13 +98,16 @@ def test_add_class_product(test_data_1, test_data_other):
     result = test_data_1 + test_data_other
     assert result == expected_result
 
+
 def test_add_class_product_smartphone_different_types(test_data_smartphone, test_data_lawn_grass):
     with pytest.raises(TypeError):
         assert test_data_smartphone + test_data_lawn_grass == "Нельзя складывать товары разных типов"
 
+
 def test_add_class_lawn_grass_different_types(test_data_lawn_grass, test_data_smartphone):
     with pytest.raises(TypeError):
         assert test_data_smartphone + test_data_lawn_grass == "Нельзя складывать товары разных типов"
+
 
 def test_add_product_invalid_obj(test_data_2):
     invalid_obj = object()
