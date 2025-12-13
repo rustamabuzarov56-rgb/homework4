@@ -22,9 +22,11 @@ class Product:
 
     def __add__(self, other: Product) -> float:
         """Магический метод возвращает сумму произведений цены на количество."""
-        result = self.__price * self.quantity
-        result2 = other.__price * other.quantity
-        return result + result2
+        if type(self) is type(other):
+            result = self.__price * self.quantity
+            result2 = other.__price * other.quantity
+            return result + result2
+        raise TypeError("Нельзя складывать товары разных типов")
 
     @classmethod
     def new_product(cls, product_data: dict) -> Product:
@@ -44,6 +46,46 @@ class Product:
             self.__price = float(new_price)
         else:
             print("Цена не должна быть нулевая или отрицательная")
+
+
+class Smartphone(Product):
+    """Класс смартфоны"""
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        efficiency: float,
+        model: str,
+        memory: int,
+        color: str,
+    ):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+class LawnGrass(Product):
+    """Класс трава газонная"""
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        country: str,
+        germination_period: str,
+        color: str,
+    ):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
 
 
 class Category:
@@ -72,8 +114,11 @@ class Category:
 
     def add_product(self, product: Product) -> None:
         """Метод добавления товара в категорию"""
-        self.__products.append(product)
-        Category.product_count += 1
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.product_count += 1
+        else:
+            raise TypeError("Можно добавлять продукт только класса Product и его наследников")
 
     @property
     def products(self) -> str:

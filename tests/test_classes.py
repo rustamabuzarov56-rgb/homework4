@@ -1,3 +1,5 @@
+import pytest
+
 from src.classes import Category, Product
 
 
@@ -13,6 +15,27 @@ def test_new_product(test_data_1):
     assert test_data_1.description == "256GB, Серый цвет, 200MP камера"
     assert test_data_1.price == 180000.0
     assert test_data_1.quantity == 5
+
+
+def test_smartphone(test_data_smartphone):
+    assert test_data_smartphone.name == "Xiaomi Redmi Note 11"
+    assert test_data_smartphone.description == "1024GB, Синий"
+    assert test_data_smartphone.price == 31000.0
+    assert test_data_smartphone.quantity == 14
+    assert test_data_smartphone.efficiency == 90.3
+    assert test_data_smartphone.model == "Note 11"
+    assert test_data_smartphone.memory == 1024
+    assert test_data_smartphone.color == "Синий"
+
+
+def test_lawn_grass(test_data_lawn_grass):
+    assert test_data_lawn_grass.name == "Газонная трава"
+    assert test_data_lawn_grass.description == "Элитная трава для газона"
+    assert test_data_lawn_grass.price == 500.0
+    assert test_data_lawn_grass.quantity == 20
+    assert test_data_lawn_grass.country == "Россия"
+    assert test_data_lawn_grass.germination_period == "7 дней"
+    assert test_data_lawn_grass.color == "Зеленый"
 
 
 def test_price(test_data_1):
@@ -74,3 +97,19 @@ def test_add_class_product(test_data_1, test_data_other):
     expected_result = 180000.0 * 5 + 210000.0 * 8  # Должно быть равно 2580000.0
     result = test_data_1 + test_data_other
     assert result == expected_result
+
+
+def test_add_class_product_smartphone_different_types(test_data_smartphone, test_data_lawn_grass):
+    with pytest.raises(TypeError):
+        assert test_data_smartphone + test_data_lawn_grass == "Нельзя складывать товары разных типов"
+
+
+def test_add_class_lawn_grass_different_types(test_data_lawn_grass, test_data_smartphone):
+    with pytest.raises(TypeError):
+        assert test_data_smartphone + test_data_lawn_grass == "Нельзя складывать товары разных типов"
+
+
+def test_add_product_invalid_obj(test_data_2):
+    invalid_obj = object()
+    with pytest.raises(TypeError):
+        test_data_2.add_product(invalid_obj)
