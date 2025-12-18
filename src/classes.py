@@ -1,17 +1,21 @@
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
+
 
 class BaseProduct(ABC):
     """Абстрактный класс, который является родительским для классов продуктов"""
+
     @abstractmethod
-    def __init__(self, name, description, price, quantity):
+    def __init__(self) -> None:
         pass
 
 
 class MixinLog:
     """Класс-миксин при создании объекта распечатывает в консоль информацию о том,
-       от какого класса и с какими параметрами был создан объект."""
-    def __init__(self):
+    от какого класса и с какими параметрами был создан объект."""
+
+    def __init__(self) -> None:
         print(repr(self))
 
     def __repr__(self):
@@ -37,8 +41,6 @@ class Product(MixinLog, BaseProduct):
         self.__price = price
         self.quantity = quantity
         super().__init__()
-
-        
 
     def __str__(self) -> str:
         """Магический метод добавляет строковое отображение в виде: 'Название продукта, 80 руб. Остаток: 15 шт.'"""
@@ -70,7 +72,6 @@ class Product(MixinLog, BaseProduct):
             self.__price = float(new_price)
         else:
             print("Цена не должна быть нулевая или отрицательная")
-
 
 
 class Smartphone(Product):
