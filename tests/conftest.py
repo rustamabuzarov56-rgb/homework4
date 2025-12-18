@@ -34,3 +34,4 @@ def test_data_smartphone():
 @pytest.fixture
 def test_data_lawn_grass():
     return LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20, "Россия", "7 дней", "Зеленый")
+
