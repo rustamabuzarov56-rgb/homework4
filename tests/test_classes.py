@@ -1,6 +1,6 @@
 import pytest
 
-from src.classes import Category, Product
+from src.classes import BaseProduct, Category, MixinLog, Product
 
 
 def test_product(test_data_1):
@@ -113,3 +113,19 @@ def test_add_product_invalid_obj(test_data_2):
     invalid_obj = object()
     with pytest.raises(TypeError):
         test_data_2.add_product(invalid_obj)
+
+
+def test_repr(test_data_1):
+    expected_output = "Product(Samsung Galaxy S23 Ultra, 256GB, Серый цвет, 200MP камера, 180000.0, 5)"
+    assert repr(test_data_1) == expected_output
+
+
+def test_repr_missing_attributes():
+    log = MixinLog()
+    expected_output = "MixinLog(attributes are missing)"
+    assert repr(log) == expected_output
+
+
+def test_base_product_is_abstract():
+    with pytest.raises(TypeError):
+        BaseProduct("Name", "Description", 100, 5)

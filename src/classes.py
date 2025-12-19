@@ -1,7 +1,31 @@
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 
-class Product:
+
+class BaseProduct(ABC):
+    """Абстрактный класс, который является родительским для классов продуктов"""
+
+    @abstractmethod
+    def __init__(self) -> None:
+        pass
+
+
+class MixinLog:
+    """Класс-миксин при создании объекта распечатывает в консоль информацию о том,
+    от какого класса и с какими параметрами был создан объект."""
+
+    def __init__(self) -> None:
+        print(repr(self))
+
+    def __repr__(self):
+        try:
+            return f"{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})"
+        except AttributeError:
+            return f"{self.__class__.__name__}(attributes are missing)"
+
+
+class Product(MixinLog, BaseProduct):
     """Представляет отдельный товар в магазине"""
 
     name: str
@@ -11,10 +35,12 @@ class Product:
 
     def __init__(self, name: str, description: str, price: float, quantity: int):
         """Представляет отдельный товар в магазине"""
+
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__()
 
     def __str__(self) -> str:
         """Магический метод добавляет строковое отображение в виде: 'Название продукта, 80 руб. Остаток: 15 шт.'"""
@@ -106,7 +132,7 @@ class Category:
 
     def __str__(self) -> str:
         """Магический метод добавляет строковое отображение в виде:
-        'Название категории, количество продуктов: 200 шт.'"""
+        'Название категории, количество продуктов.'"""
         total_quantity = 0
         for product in self.__products:
             total_quantity += product.quantity
