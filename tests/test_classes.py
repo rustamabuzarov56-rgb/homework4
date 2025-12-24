@@ -10,6 +10,11 @@ def test_product(test_data_1):
     assert test_data_1.quantity == 5
 
 
+def test_product_error():
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 0)
+
+
 def test_new_product(test_data_1):
     assert test_data_1.name == "Samsung Galaxy S23 Ultra"
     assert test_data_1.description == "256GB, Серый цвет, 200MP камера"
@@ -129,3 +134,12 @@ def test_repr_missing_attributes():
 def test_base_product_is_abstract():
     with pytest.raises(TypeError):
         BaseProduct("Name", "Description", 100, 5)
+
+
+def test_middle_price(test_data_2):
+    actual_avg_price = Category.middle_price(test_data_2)
+    assert actual_avg_price == 140333.33
+
+
+def test_middle_price_error(category_empty):
+    assert Category.middle_price(category_empty) == 0

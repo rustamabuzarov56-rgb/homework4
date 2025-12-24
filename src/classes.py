@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
+from typing import Any
+
 
 class BaseProduct(ABC):
     """Абстрактный класс, который является родительским для классов продуктов"""
@@ -40,6 +42,8 @@ class Product(MixinLog, BaseProduct):
         self.description = description
         self.__price = price
         self.quantity = quantity
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         super().__init__()
 
     def __str__(self) -> str:
@@ -153,3 +157,10 @@ class Category:
         for product in self.__products:
             result += f"{str(product)}\n"
         return result
+
+    def middle_price(self) -> Any:
+        """Метод который подсчитывает средний ценник всех товаров"""
+        try:
+            return round(sum(product.price for product in self.__products) / len(self.__products), 2)
+        except ZeroDivisionError:
+            return 0
