@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from itertools import product
+
+from typing import Any
 
 
 class BaseProduct(ABC):
@@ -42,7 +43,7 @@ class Product(MixinLog, BaseProduct):
         self.__price = price
         self.quantity = quantity
         if quantity == 0:
-            raise ValueError ("Товар с нулевым количеством не может быть добавлен")
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         super().__init__()
 
     def __str__(self) -> str:
@@ -157,7 +158,7 @@ class Category:
             result += f"{str(product)}\n"
         return result
 
-    def middle_price(self):
+    def middle_price(self) -> Any:
         """Метод который подсчитывает средний ценник всех товаров"""
         try:
             return round(sum(product.price for product in self.__products) / len(self.__products), 2)
